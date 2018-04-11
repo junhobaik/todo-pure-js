@@ -16,5 +16,7 @@ app.get('/', (req, res) => {
 })
 
 app.use('/login', login);
+app.use('/join', join);
+app.use('/main', main);
 
 module.exports = app;
