@@ -1,6 +1,6 @@
 const express = require('express'); 
 const app = express(); 
-const bodyParser = require('body-parser'); 
+const bodyParser = require('body-parser');
 const mysql = require('mysql'); 
 const morgan = require('morgan');
 
@@ -10,6 +10,8 @@ const main = require('./api/main');
 
 app.use(express.static('api'));
 app.use(morgan('dev'));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended: true}));
 
 app.get('/', (req, res) => {
   res.sendFile(__dirname + "/api/index.html");
