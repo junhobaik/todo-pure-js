@@ -6,3 +6,6 @@ dist/
 
 # node
 node_modules/
+
+# secret config file
+config/config.js
