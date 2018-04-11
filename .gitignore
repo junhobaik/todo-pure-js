@@ -3,3 +3,6 @@ document.md
 # parcel
 .cache/
 dist/
+
+# node
+node_modules/
