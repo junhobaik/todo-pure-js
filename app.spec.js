@@ -116,26 +116,58 @@ describe("[/login] Test Suite", () => {
   });
 
   describe("- FAIL case", () => {
-    it('빈칸 존재할 시 400', done => {
+    it("빈칸 존재할 시 400", done => {
       request(app)
-      .post("/login/connect")
-      .send({ id, password: '' })
-      .expect(400)
-      .end(done);  
+        .post("/login/connect")
+        .send({ id, password: "" })
+        .expect(400)
+        .end(done);
     });
     it("없는 아이디 일 시 400", done => {
       request(app)
-      .post("/login/connect")
-      .send({ id: 'a1b1c26wage99', password })
-      .expect(400)
-      .end(done);
+        .post("/login/connect")
+        .send({ id: "a1b1c26wage99", password })
+        .expect(400)
+        .end(done);
     });
     it("틀린 패스워드 일 시 400", done => {
       request(app)
-      .post("/login/connect")
-      .send({ id, password: `${password}a` })
-      .expect(400)
-      .end(done);
+        .post("/login/connect")
+        .send({ id, password: `${password}a` })
+        .expect(400)
+        .end(done);
+    });
+  });
+});
+
+describe("[/main] Test Suite", () => {
+  describe("- POST /add", () => {
+    describe("- SUCCESS case", () => {
+      it("TODO 추가 성공 302(/main?num=...)", done => {
+        request(app)
+          .post("/main/add")
+          .send({ user_num: 0, text: "INSERT TESTING" })
+          .expect(302)
+          .end(done);
+      });
+    });
+  });
+
+  describe("- UPDATE /update", () => {
+    describe("- SUCCESS case", () => {
+
+    });
+    describe("- FAIL case", () => {
+
+    });
+  });
+
+  describe("- DELETE /delete", () => {
+    describe("- SUCCESS case", () => {
+
+    });
+    describe("- FAIL case", () => {
+      
     });
   });
 });
