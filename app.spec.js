@@ -56,13 +56,13 @@ describe("[/Join] Test Suite", () => {
     });
 
     describe("- FAIL case", () => {
-      it('빈 작성란 있을 시 400 반환', done => {
+      it("빈 작성란 있을 시 400 반환", done => {
         request(app)
           .post("/join/add")
-          .send({id:'', ...testUser})
+          .send({ id: "", ...testUser })
           .expect(400)
-          .end(done);        
-      })
+          .end(done);
+      });
       it("중복된 ID시 400 반환", done => {
         request(app)
           .post("/join/add")
@@ -77,6 +77,65 @@ describe("[/Join] Test Suite", () => {
           .expect(400)
           .end(done);
       });
+    });
+  });
+});
+
+describe("[/login] Test Suite", () => {
+  const testUser = {
+    name: "홍길동 TEST",
+    id: "mrhong",
+    password: "abc123",
+    passwordCheck: "abc123"
+  };
+  const { id, password } = testUser;
+  before("테스트 DB Insert", done => {
+    request(app)
+      .post("/join/add")
+      .send(testUser)
+      .expect(302)
+      .end(done);
+  });
+  after("테스트 DB Insert 했던 것 Delete", done => {
+    connection.query(
+      `delete from users where name="${testUser.name}"`,
+      (err, rows) => {
+        done();
+      }
+    );
+  });
+
+  describe("- SUCCESS case", () => {
+    it("로그인 성공 시 302(main 페이지 리다이렉트)", done => {
+      request(app)
+        .post("/login")
+        .send({ id, password })
+        .expect(302)
+        .end(done);
+    });
+  });
+
+  describe("- FAIL case", () => {
+    it('빈칸 존재할 시 400', done => {
+      request(app)
+      .post("/login")
+      .send({ id, password: '' })
+      .expect(400)
+      .end(done);  
+    });
+    it("없는 아이디 일 시 400", done => {
+      request(app)
+      .post("/login")
+      .send({ id: 'a1b1c26wage99', password })
+      .expect(400)
+      .end(done);
+    });
+    it("틀린 패스워드 일 시 400", done => {
+      request(app)
+      .post("/login")
+      .send({ id, password: `${password}a` })
+      .expect(400)
+      .end(done);
     });
   });
 });
