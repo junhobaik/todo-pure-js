@@ -108,7 +108,7 @@ describe("[/login] Test Suite", () => {
   describe("- SUCCESS case", () => {
     it("로그인 성공 시 302(main 페이지 리다이렉트)", done => {
       request(app)
-        .post("/login")
+        .post("/login/connect")
         .send({ id, password })
         .expect(302)
         .end(done);
@@ -118,21 +118,21 @@ describe("[/login] Test Suite", () => {
   describe("- FAIL case", () => {
     it('빈칸 존재할 시 400', done => {
       request(app)
-      .post("/login")
+      .post("/login/connect")
       .send({ id, password: '' })
       .expect(400)
       .end(done);  
     });
     it("없는 아이디 일 시 400", done => {
       request(app)
-      .post("/login")
+      .post("/login/connect")
       .send({ id: 'a1b1c26wage99', password })
       .expect(400)
       .end(done);
     });
     it("틀린 패스워드 일 시 400", done => {
       request(app)
-      .post("/login")
+      .post("/login/connect")
       .send({ id, password: `${password}a` })
       .expect(400)
       .end(done);
