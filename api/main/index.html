@@ -19,25 +19,15 @@
         <button type="submit">추가하기</button>
       </form>
     </div>
-    <div>
-      <ul>
-        <li>
-          <span>TODO 3</span>
-          <button>Edit</button>
-          <button>X</button>
-        </li>
-        <li>
-          <span>TODO 2</span>
-          <button>Edit</button>
-          <button>X</button>
-        </li>
-        <li>
-          <span>TODO 1</span>
-          <button>Edit</button>
-          <button>X</button>
-        </li>
-      </ul>
+    <div class="todo-list">
     </div>
+    <script src="./main.js"></script>
+    <script type="template" id="todoList">
+      <ul>
+        {todoList}
+      </ul>
+    </script>
+
   </article>
   <footer>
 
