@@ -165,13 +165,44 @@ describe("[/main] Test Suite", () => {
   });
 
   describe("- UPDATE /update", () => {
-    describe("- SUCCESS case", () => {});
-    describe("- FAIL case", () => {});
+    let lastTextNum;
+    before("todos table length 찾기", done => {
+      connection.query("select * from todos", (err, rows) => {
+        lastTextNum = parseInt(rows[rows.length - 1].text_num);
+        done();
+      });
+    });
+
+    describe("- SUCCESS case", () => {
+      it('TODO 수정 성공', done => {
+        request(app)
+        .post('/main/edit')
+        .send({ text_num: lastTextNum, text: 'EDITED TEXT'})
+        .end((err,res) => {
+          connection.query(
+            `select * from todos where text_num=${lastTextNum}`,
+            (err, rows) => {
+              rows[0].should.have.value('text', 'EDITED TEXT');
+              done();
+            }
+          );
+        })
+      })
+    });
+    describe("- FAIL case", () => {
+      it("전달 프로퍼티가 없을때 400 반환", done => {
+        request(app)
+        .post("/main/edit")
+        .send({})
+        .expect(400)
+        .end(done);
+      });
+    });
   });
 
   describe("- DELETE /delete", () => {
     let lastTextNum;
-    before("테스트 DB 추가 및 todos table length 찾기", done => {
+    before("todos table length 찾기", done => {
       connection.query("select * from todos", (err, rows) => {
         lastTextNum = parseInt(rows[rows.length - 1].text_num);
         done();
