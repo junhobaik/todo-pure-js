@@ -36,9 +36,19 @@ router.post("/add", (req, res) => {
   );
 });
 
+router.post("/edit", (req, res) => {
+  const {text_num, text} = req.body;
+  connection.query(`update todos set text="${text}" where text_num=${text_num}`, (err, rows) =>{
+    if(err){
+      res.sendStatus(400);
+    } else {
+      res.end();
+    }
+  })
+})
+
 router.post("/delete", (req, res) => {
   const textNum = req.body.key;
-
   connection.query(`delete from todos where text_num=${textNum}`, (err, rows)=>{
     if(err){
       res.sendStatus(400);
