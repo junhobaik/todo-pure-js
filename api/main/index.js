@@ -36,4 +36,16 @@ router.post("/add", (req, res) => {
   );
 });
 
+router.post("/delete", (req, res) => {
+  const textNum = req.body.key;
+
+  connection.query(`delete from todos where text_num=${textNum}`, (err, rows)=>{
+    if(err){
+      res.sendStatus(400);
+    }else {
+      res.end();
+    }
+  })
+})
+
 module.exports = router;
