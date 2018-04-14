@@ -16,7 +16,7 @@ router.post('/connect', (req, res) => {
       if(!rows.length || rows[0].password !== password){
         res.sendStatus(400);
       }else {
-        res.redirect('/main');
+        res.redirect(`/main/?num=${rows[0].num}`);
       }
     })
   }
