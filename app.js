@@ -33,6 +33,9 @@ app.get("/deleteall", (req, res) => {
   const query = connection.query("truncate table users", function(err, rows) {
     res.end();
   });
+  connection.query("truncate table todos", function(err, rows) {
+    res.end();
+  });
 });
 /**************************************** */
 
