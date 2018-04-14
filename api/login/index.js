@@ -6,10 +6,6 @@ const mysql = require("mysql");
 const config = require("../../config/config.js");
 const connection = mysql.createConnection(config.mysql);
 
-router.get('/', (req, res) => {
-  res.sendFile("./index.html");
-})
-
 router.post('/connect', (req, res) => {
   const { id, password } = req.body;
 
@@ -20,7 +16,7 @@ router.post('/connect', (req, res) => {
       if(!rows.length || rows[0].password !== password){
         res.sendStatus(400);
       }else {
-        res.redirect('/main');
+        res.redirect(`/main/?num=${rows[0].num}`);
       }
     })
   }
