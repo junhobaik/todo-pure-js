@@ -29,7 +29,7 @@
 
 ### TDD example
 
-```shell
+```
   Utils Test
     ✓ MySQL Connection
 
