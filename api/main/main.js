@@ -1,8 +1,8 @@
-const ajax = (url, fn) => {
+const ajax = (url, fn, sendData) => {
   const xhr = new XMLHttpRequest();
   xhr.open("POST", url);
   xhr.setRequestHeader("Content-Type", "application/json");
-  xhr.send();
+  xhr.send(JSON.stringify(sendData) || '');
 
   xhr.addEventListener("load", () => {
     const data = JSON.parse(xhr.responseText);
@@ -16,8 +16,8 @@ const render = data => {
   const todos = data.reduce((p, v, i) => {
     return (
       p +
-      `<li>
-    <span class="todo-span" key=${v.text_num}>${v.text}</span>
+      `<li key=${v.text_num}>
+    <span class="todo-span">${v.text}</span>
     <input class="todo-input" style="display:none;" type="text" value="${
       v.text
     }"/>
@@ -70,7 +70,11 @@ const deleteTodo = () => {
   );
   delBtn.map(v => {
     v.addEventListener("click", e => {
+      const key = parseInt(e.target.parentElement.attributes.key.value);
       e.target.parentElement.remove();
+      ajax("/main/delete", (data)=>{
+        //console.log(data);
+      }, {key});
     });
   });
 };
