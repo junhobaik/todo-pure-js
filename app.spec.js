@@ -146,28 +146,62 @@ describe("[/main] Test Suite", () => {
       it("TODO 추가 성공 302(/main?num=...)", done => {
         request(app)
           .post("/main/add")
-          .send({ user_num: 0, text: "INSERT TESTING" })
+          .send({ user_num: 0, newTodo: "INSERT TESTING" })
           .expect(302)
-          .end(done);
+          .end((err, res) => {
+            connection.query(
+              'select * from todos where user_num=0 and text="INSERT TESTING"',
+              (err, rows) => {
+                if (!err && rows.length) {
+                  done();
+                } else {
+                  throw err;
+                }
+              }
+            );
+          });
       });
     });
   });
 
   describe("- UPDATE /update", () => {
-    describe("- SUCCESS case", () => {
-
-    });
-    describe("- FAIL case", () => {
-
-    });
+    describe("- SUCCESS case", () => {});
+    describe("- FAIL case", () => {});
   });
 
   describe("- DELETE /delete", () => {
-    describe("- SUCCESS case", () => {
+    let lastTextNum;
+    before("테스트 DB 추가 및 todos table length 찾기", done => {
+      connection.query("select * from todos", (err, rows) => {
+        lastTextNum = parseInt(rows[rows.length - 1].text_num);
+        done();
+      });
+    });
 
+    describe("- SUCCESS case", () => {
+      it("TODO 삭제 성공", done => {
+        request(app)
+          .post("/main/delete")
+          .send({ key: lastTextNum })
+          .end((err, res) => {
+            connection.query(
+              `select * from todos where text_num=${lastTextNum}`,
+              (err, rows) => {
+                rows.should.have.length(0);
+                done();
+              }
+            );
+          });
+      });
     });
     describe("- FAIL case", () => {
-      
+      it("key값 (text_num) 이 없을때 400 반환", done => {
+        request(app)
+        .post("/main/delete")
+        .send({})
+        .expect(400)
+        .end(done);
+      });
     });
   });
 });
