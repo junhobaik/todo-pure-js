@@ -2,7 +2,7 @@ const ajax = (url, fn, sendData) => {
   const xhr = new XMLHttpRequest();
   xhr.open("POST", url);
   xhr.setRequestHeader("Content-Type", "application/json");
-  xhr.send(JSON.stringify(sendData) || '');
+  xhr.send(JSON.stringify(sendData));
 
   xhr.addEventListener("load", () => {
     const data = JSON.parse(xhr.responseText);
@@ -60,6 +60,13 @@ const edit = () => {
       vSapn.innerText = editedValue;
 
       toggleShow(vInput, vSapn, vDoneBtn, vEditBtn);
+
+      ajax("/main/edit", (data) => {
+        //console.log(data);
+      }, {
+        text_num: v.attributes.key.value,
+        text: editedValue
+      });
     });
   });
 };
@@ -72,9 +79,13 @@ const deleteTodo = () => {
     v.addEventListener("click", e => {
       const key = parseInt(e.target.parentElement.attributes.key.value);
       e.target.parentElement.remove();
-      ajax("/main/delete", (data)=>{
-        //console.log(data);
-      }, {key});
+      ajax(
+        "/main/delete",
+        data => {
+          //console.log(data);
+        },
+        { key }
+      );
     });
   });
 };
