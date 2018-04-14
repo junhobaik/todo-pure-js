@@ -5,7 +5,7 @@ const mysql = {
   port: 0,
   user: '',
   password: '',
-  database: ''
+  database: 'todo_pure_js'
 };
 
 module.exports = { mysql };
