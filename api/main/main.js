@@ -23,7 +23,7 @@ const render = data => {
     }"/>
     <button class="edit-btn">Edit</button>
     <button class="done-btn" style="display:none;">Done</button>
-    <button>X</button>
+    <button class="del-btn">X</button>
     </li>`
     );
   }, "");
@@ -32,15 +32,15 @@ const render = data => {
   document.querySelector(".todo-list").innerHTML = result;
 };
 
-const toggleShow = function (els){
+const toggleShow = function(els) {
   const args = Array.from(arguments);
   args.map(v => {
-    if(v.style.display === 'none'){
-      v.style.display = 'inline-block'
+    if (v.style.display === "none") {
+      v.style.display = "inline-block";
     } else {
-      v.style.display = 'none';
+      v.style.display = "none";
     }
-  })
+  });
 };
 
 const edit = () => {
@@ -64,9 +64,21 @@ const edit = () => {
   });
 };
 
+const deleteTodo = () => {
+  const delBtn = Array.from(
+    document.querySelectorAll(".todo-list>ul>li .del-btn")
+  );
+  delBtn.map(v => {
+    v.addEventListener("click", e => {
+      e.target.parentElement.remove();
+    });
+  });
+};
+
 document.addEventListener("DOMContentLoaded", () => {
   ajax(`/main/user${location.search}`, data => {
     render(data);
     edit();
+    deleteTodo();
   });
 });
