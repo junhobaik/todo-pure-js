@@ -14,10 +14,6 @@ if(process.env.NODE_ENV !== 'test') {
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-app.get("/", (req, res) => {
-  res.sendFile(__dirname + "/api/index.html");
-});
-
 /*Development Codes************************** */
 const mysql = require("mysql");
 const config = require("./config/config.js");
