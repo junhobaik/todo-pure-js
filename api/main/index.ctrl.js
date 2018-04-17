@@ -1,3 +1,8 @@
+// mysql connection settings
+const mysql = require("mysql");
+const config = require("../../config/config.js");
+const connection = mysql.createConnection(config.mysql);
+
 let num = 0;
 
 const getTodos = (req, res) => {
@@ -13,14 +18,14 @@ const getTodos = (req, res) => {
 };
 
 const addTodo = (req, res) => {
-  const { newTodo } = req.body;
+  const { userNum, textValue } = req.body;
 
   connection.query(
     `insert into todos set ?`,
-    { user_num: num, text: newTodo },
+    { user_num: userNum, text: textValue },
     (err, rows) => {
       if (!err) {
-        res.redirect('/main?num='+num);
+        res.send(rows);
       } else {
         res.sendStatus(400);
       }
