@@ -1,3 +1,8 @@
+// mysql connection settings
+const mysql = require("mysql");
+const config = require("../../config/config.js");
+const connection = mysql.createConnection(config.mysql);
+
 const connect = (req, res) => {
   const { id, password } = req.body;
 
@@ -12,8 +17,8 @@ const connect = (req, res) => {
       }
     })
   }
-};
-
+}
+;
 module.exports = {
   connect
 }

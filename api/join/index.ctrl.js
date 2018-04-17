@@ -1,4 +1,9 @@
-const add_user = (req, res) => {
+// mysql connection settings
+const mysql = require("mysql");
+const config = require("../../config/config.js");
+const connection = mysql.createConnection(config.mysql);
+
+const addUser = (req, res) => {
   const { name, id, password, passwordCheck } = req.body;
 
   if (name === "" || id === "" || password === "" || passwordCheck === "") {
@@ -19,3 +24,5 @@ const add_user = (req, res) => {
     );
   }
 };
+
+module.exports = { addUser };
