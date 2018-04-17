@@ -143,11 +143,11 @@ describe("[/login] Test Suite", () => {
 describe("[/main] Test Suite", () => {
   describe("- POST /add", () => {
     describe("- SUCCESS case", () => {
-      it("TODO 추가 성공 302(/main?num=...)", done => {
+      it("TODO 추가 성공 200", done => {
         request(app)
           .post("/main/add")
-          .send({ user_num: 0, newTodo: "INSERT TESTING" })
-          .expect(302)
+          .send({ userNum: 0, textValue: "INSERT TESTING" })
+          .expect(200)
           .end((err, res) => {
             connection.query(
               'select * from todos where user_num=0 and text="INSERT TESTING"',
@@ -168,7 +168,7 @@ describe("[/main] Test Suite", () => {
     let lastTextNum;
     before("todos table length 찾기", done => {
       connection.query("select * from todos", (err, rows) => {
-        lastTextNum = parseInt(rows[rows.length - 1].text_num);
+        lastTextNum = parseInt(rows[rows.length ? rows.length- 1 : 0].text_num);
         done();
       });
     });
