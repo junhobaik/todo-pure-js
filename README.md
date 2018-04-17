@@ -9,6 +9,7 @@
 - API design
 - Testing (TDD)
 - MySQL Database
+- MVC Pattern
 
 프론트에서의 세세한 기능이나 로그인 보안(ex. passport)은 고려하지 않고, 위 세가지에만 비중을 둬서 제작,  
 서버사이드 라이브러리를 제외하고는 jQuery, template 라이브러리 (ex. ejs) 등 클라이언트 사이드에서 라이브러리 사용을 하지 않고 순수 자바스크립트로 제작.
