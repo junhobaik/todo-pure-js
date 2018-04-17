@@ -21,6 +21,7 @@
 - [Server]
   - express
   - morgan
+  - mysql
   - [Test]
     - mocha
     - should
